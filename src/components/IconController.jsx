@@ -4,25 +4,22 @@ import { Slider } from "@/components/ui/slider"
 import ColorPickerController from './ColorPickerController';
 import { UpdateStorageContext } from '@/context/UpdateStorageContext';
 
-function IconController() {
-    const [size, setSize]=useState(280);
-    const [rotate, setRotate]=useState(0);
-    const [color, setColor]=useState('#fff');
-    const storageValue=JSON.parse(localStorage.getItem('value'));
-    const {updateStorage,setUpdateStorage}=useContext(UpdateStorageContext);
-    
+function IconController({updateStorage, setUpdateStorage}) {
+    const [size, setSize]=useState(updateStorage?.iconSize ? updateStorage?.iconSize : 280);
+    const [rotate, setRotate]=useState(updateStorage?.iconRotate ? updateStorage?.iconRotate : 0);
+    const [color, setColor]=useState(updateStorage?.iconColor ? updateStorage?.iconColor : '#fff');
+
+
     useEffect(()=>{
-        const updatedValue={
-            ...storageValue,
+        let updatedValue = {
+            ...updateStorage,
             iconSize:size,
             iconRotate:rotate,
             iconColor:color,
             icon:'Smile',
         }
         setUpdateStorage(updatedValue);
-        localStorage.setItem('Value',JSON.stringify(updatedValue));
-
-    },[size, rotate, color])
+    },[size, rotate, color]);
 
   return (
     <div>
@@ -33,14 +30,14 @@ function IconController() {
         </div>
         <div className='py-2'>
             <label className='p-2 flex justify-between items-center'>Size <span>{size} px</span> </label>
-            <Slider defaultValue={[280]} max={512} step={1} 
+            <Slider defaultValue={[size]} max={512} step={1} 
                 onValueChange={(event)=>setSize(event[0])}
             />
         </div>
 
         <div className='py-2'>
             <label className='p-2 flex justify-between items-center'>Rotate <span>{rotate} °</span> </label>
-            <Slider defaultValue={[280]} max={360} step={1} 
+            <Slider defaultValue={[rotate]} max={360} step={1} 
                 onValueChange={(event)=>setRotate(event[0])}
             />
         </div>
@@ -49,6 +46,7 @@ function IconController() {
             <label className='p-2 flex justify-between items-center'>Icon Color </label>
             <ColorPickerController hideController={true}
             selectedColor={(color)=>setColor(color)}
+            colorName={color}
             />
         </div>
       </div>

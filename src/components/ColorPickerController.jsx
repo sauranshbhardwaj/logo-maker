@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import ColorPicker from 'react-best-gradient-color-picker'
 
-function ColorPickerController({hideController=false,selectedColor}) {
-    const [color,setColor]=useState('rgba(255,255,255,1)');
+function ColorPickerController({hideController=false,selectedColor,colorName}) {
+    const [color,setColor]=useState(colorName);
 
   return (
     <div>

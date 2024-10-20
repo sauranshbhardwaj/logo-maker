@@ -1,26 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Slider } from './ui/slider'
 import ColorPickerController from './ColorPickerController'
-import { UpdateStorageContext } from '@/context/UpdateStorageContext'
 
-function BackgroundController() {
+function BackgroundController({updateStorage, setUpdateStorage}) {
 
-  const [rounded, setRounded]=useState(0)
-  const [padding, setPadding]=useState(0)
-  const [color, setColor]=useState('#000')
-  const storageValue=JSON.parse(localStorage.getItem('value'));
-  const {updateStorage,setUpdateStorage}=useContext(UpdateStorageContext);
+  const [rounded, setRounded]=useState(updateStorage?.bgRounded ? updateStorage?.bgRounded : 0)
+  const [padding, setPadding]=useState(updateStorage?.bgPadding ? updateStorage?.bgPadding : 0)
+  const [color, setColor]=useState(updateStorage?.bgColor ? updateStorage?.bgColor : '#000')
 
   useEffect(()=>{
-    const updateValue={
-      ...storageValue,
+      const updateValue={
+      ...updateStorage,
       bgRounded:rounded,
       bgPadding:padding,
       bgColor:color,
     }
     setUpdateStorage(updateValue);
-    localStorage.setItem('value',JSON.stringify(updateValue));
-  })
+  }, [rounded, padding, color]);
   return (
     <div>
        <div className='py-2'>
@@ -41,6 +37,7 @@ function BackgroundController() {
             <label className='p-2 flex justify-between items-center'>Background Color </label>
             <ColorPickerController hideController={false}
             selectedColor={(color)=>setColor(color)}
+            colorName={color}
             />
         </div>
     </div>
