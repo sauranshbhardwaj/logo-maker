@@ -1,17 +1,41 @@
+import html2canvas from 'html2canvas';
 import { icons } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react'
 
-function LogoPreview({updateStorage}) {
-    const Icon=({name,color,size, rotate}) => {
-        const LucidIcon = icons[name];
-        if (!LucidIcon) return;
+function LogoPreview({updateStorage, downloadIcon}) {
 
-        return <LucidIcon color={color} size={size} 
-        style={{
-          transform:`rotate(${rotate}deg)`
-        }}
-        />
+  useEffect(()=>{
+    if(downloadIcon)
+    {
+      downloadPngLogo();
     }
+  },[downloadIcon])
+
+  const downloadPngLogo=()=>{
+    const downloadLogoDiv=document.getElementById('downloadLogoDiv');
+
+    html2canvas(downloadLogoDiv,{
+      backgroundColor:null
+    }).then(canvas=>{
+      const pngImage=canvas.toDataURL('image/png');
+      const downloadLink=document.createElement('a');
+      downloadLink.href=pngImage;
+      downloadLink.download='Logo_Maker.png';
+      downloadLink.click();
+    })
+  }
+
+
+  const Icon=({name,color,size, rotate}) => {
+      const LucidIcon = icons[name];
+      if (!LucidIcon) return;
+
+      return <LucidIcon color={color} size={size} 
+      style={{
+        transform:`rotate(${rotate}deg)`
+      }}
+      />
+  }
 
   return (
     <div className='flex items-center justify-center h-screen'> 
@@ -20,7 +44,8 @@ function LogoPreview({updateStorage}) {
         padding:updateStorage?.bgPadding
       }}
       >
-        <div className='h-full w-full flex items-center justify-center'
+        <div id='downloadLogoDiv' 
+        className='h-full w-full flex items-center justify-center'
         style={{
             borderRadius:updateStorage?.bgRounded,
             background:updateStorage?.bgColor,

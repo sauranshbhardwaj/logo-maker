@@ -14,6 +14,7 @@ function App() {
   const [selectedIndex, setSelectedIndex]=useState(0);
   const [updateStorage,setUpdateStorage]=useState(JSON.parse(localStorage.getItem('value')));
 
+  const [downloadIcon,setDownloadIcon]=useState();
 
     useEffect(() => {
         localStorage.setItem('value', JSON.stringify(updateStorage))
@@ -21,7 +22,7 @@ function App() {
 
   return (
       <div>
-        <Header/>
+        <Header DownloadIcon={setDownloadIcon}/>
         <div className='w-64 fixed'>
           <SideNav selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
         </div>
@@ -32,7 +33,7 @@ function App() {
               <BackgroundController updateStorage={updateStorage} setUpdateStorage={setUpdateStorage}/>
             }
           </div>
-          <div className='md:col-span-3'><LogoPreview updateStorage={updateStorage}/></div>
+          <div className='md:col-span-3'><LogoPreview updateStorage={updateStorage} downloadIcon={downloadIcon}/></div>
           <div className='md:col-span-1'>Ads Banner</div>
         </div>
       </div>
