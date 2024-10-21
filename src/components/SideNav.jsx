@@ -13,11 +13,6 @@ function SideNav({selectedIndex, setSelectedIndex}) {
             name: 'Background',
             icon: Image
         },
-        {
-            id: 3,
-            name: 'Upgrade',
-            icon: Shield
-        },
     ]
 
     return (

@@ -2,6 +2,8 @@ import html2canvas from 'html2canvas';
 import { icons } from 'lucide-react';
 import React, { useContext, useEffect, useState } from 'react'
 
+const BASE_URL='https://logoexpress.tubeguruji.com'
+
 function LogoPreview({updateStorage, downloadIcon}) {
 
   useEffect(()=>{
@@ -51,11 +53,20 @@ function LogoPreview({updateStorage, downloadIcon}) {
             background:updateStorage?.bgColor,
         }}
         >
+            {updateStorage?.icon?.includes('.png')?
+            <img src={"/png/"+updateStorage?.icon} 
+            style={{
+              height:updateStorage?.iconSize,
+              width:updateStorage?.iconSize,
+            }}
+            />:
             <Icon name={updateStorage?.icon}
             color={updateStorage?.iconColor}
             size={updateStorage?.iconSize}
             rotate={updateStorage?.iconRotate}
             />
+          }
+            
         </div>
       </div>
     </div>

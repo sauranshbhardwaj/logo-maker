@@ -22,7 +22,7 @@ function App() {
 
   return (
       <div>
-        <Header DownloadIcon={setDownloadIcon}/>
+        <Header className='fixed' DownloadIcon={setDownloadIcon}/>
         <div className='w-64 fixed'>
           <SideNav selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
         </div>
@@ -33,8 +33,7 @@ function App() {
               <BackgroundController updateStorage={updateStorage} setUpdateStorage={setUpdateStorage}/>
             }
           </div>
-          <div className='md:col-span-3'><LogoPreview updateStorage={updateStorage} downloadIcon={downloadIcon}/></div>
-          <div className='md:col-span-1'>Ads Banner</div>
+          <div className='md:col-span-4'><LogoPreview updateStorage={updateStorage} downloadIcon={downloadIcon}/></div>
         </div>
       </div>
   )
